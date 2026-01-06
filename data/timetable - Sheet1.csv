@@ -1,0 +1,47 @@
+lschool,course,day,start_time,end_time,room,faculty
+CDS,DL ,Monday,09:40,11:10,AB2 - 205,Ram
+CDS,NLP,Monday,09:40,11:10,AB2 - 203,Mariya
+LAW,Property law,Monday,09:40,11:10,AB2 - 206,Sarath
+LAW,Civil Procedure,Monday,11:20,12:50,AB2 - 204,Jaisy
+SAS,Writing,Monday,11:20,12:50,AB2 - 203,Grace
+CDS,ITP ,Monday,11:20,12:50,AB1 - LAB,Ujjwal
+SAS,Critical Thinking,Monday,01:20,02:45,AB1 - 101,sid
+CDS,ITP ,Monday,01:20,02:45,AB2 - 203,ujjwal
+LAW,Company Law,Monday,02:55,04:20,AB1 - 102,anand
+LAW,IDC,Monday,02:55,04:20,AB2 - 203,vikas
+CDS,DL ,Tuesday,09:40,11:10,AB2 - 205,ram
+SAS,Psychology,Tuesday,09:40,11:10,AB1 - 103,sindhuja
+LAW,Indian Politics,Tuesday,09:40,11:10,AB1 - 102,shiju
+CDS,ITP ,Tuesday,11:20,12:50,AB2 - 101,ujjwal
+CDS,Cybersecurity,Tuesday,11:20,12:50,AB2 - 205,ramesh
+LAW,Company Law,Tuesday,11:20,12:50,AB2 - 211,anand
+CDS,IDC,Tuesday,11:20,12:50,AB2 - 202,vikas
+LAW,Property law,Tuesday,01:20,02:45,AB1 - 102,sarath
+CDS,OS,Tuesday,02:55,02:45,AB2 - 205,gopi
+LAW,Law of Evidence,Tuesday,02:55,02:45,AB1 - 102,shiju
+SAS,Project Studies,Tuesday,02:55,02:45,AB2 - LAB,kali
+CDS,DCBD,Wednesday,09:40,11:10,AB2 - 101,Mariya
+LAW,Constitutional law,Wednesday,09:40,11:10,AB1 - 202,jaisy
+LAW,Law of Evidence,Wednesday,01:20,02:45,AB1 - 102,anand
+CDS,SIA,Wednesday,11:20,12:50,AB2 - 101,ashok
+LAW,Civil Procedure,Wednesday,11:20,12:50,AB1 - 102,shiju
+CDS,CD,Wednesday,11:20,12:50,AB2 - 203,Angel
+LAW,IDC,Wednesday,01:20,02:45,AB2 - 202,vikas
+CDS,Applied Statistics,Thursday,09:40,11:10,AB2 - 202,ujjwal
+CDS,Cybersecurity,Thursday,11:20,12:50,AB2 - 202,ramesh
+CDS,OS,Thursday,01:20,02:45,AB1 - 101,gopi
+LAW,Law of Evidence,Thursday,02:55,04:20,AB1 - 102,anand
+LAW,Company Law,Thursday,09:40,11:10, AB1 - 102,jaisy
+LAW,Property law,Thursday,11:20,12:50,AB1 - 102,shju
+LAW,Constitutional law,Thursday,01:20,02:45,AB1 - 102,vikas
+CDS,Calculus,Thursday,09:40,11:20,AB2 - 203,ujjwal
+SAS,Critical Thinking,Thursday,11:20,12:40,AB2 - 203,sid
+SAS,Writing,Thursday,01:20,02:45,AB2 - 203,grace
+CDS,ITP ,Thursday,01:20,02:45,AB2 -202,ujjwal
+CDS,Applied Statistics,Friday,09:00,10:30,AB2 - 202,ujjwal
+CDS,SIA,Friday,11:20,12:50,AB2 -101,ashok
+LAW,Constitutional law,Friday,09:40,11:10,AB2 - 206,shiju
+LAW,Civil Procedure,Friday,11:20,12:50,AB2 - 206,jaisy
+CDS,NLP,Friday,01:20,02:45,AB2 - 205,Mariya
+CDS,DCBD,Friday,01:20,02:45,AB2 -101,angel
+SAS,Pysology,Friday,02:55,04:20,AB2 - 207,sindhuja
