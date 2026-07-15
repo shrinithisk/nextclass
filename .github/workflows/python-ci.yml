@@ -48,7 +48,7 @@ jobs:
         pytest
 
     - name: Run Gitleaks scan
-      uses: zricethezav/gitleaks-action@v2
+      uses: zricethezav/gitleaks-action@d664539659b2075a3a401c137456d35272a729e2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Gitleaks might use this for reporting or integration.
 
