@@ -1,0 +1,61 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # For checking out the repository code.
+      security-events: write # For uploading SARIF results from Semgrep.
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required for gitleaks to scan the full commit history.
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' # Specify a precise Python version for consistency.
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Install project dependencies from requirements.txt
+        # If your project uses poetry or pipenv, adapt this step accordingly.
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        else
+          echo "No requirements.txt found. Skipping dependency installation."
+        fi
+
+    - name: Run tests
+      run: |
+        # Install pytest if not already in requirements.txt or dev dependencies.
+        pip install pytest
+        # Execute tests. Adjust command if using a different test runner (e.g., unittest, nose).
+        # For example: 'python -m unittest discover' or 'pytest --cov=./ --cov-report=xml'
+        pytest
+
+    - name: Run Gitleaks scan
+      uses: zricethezav/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Gitleaks might use this for reporting or integration.
+
+    - name: Run Semgrep scan
+      uses: returntocorp/semgrep-action@v1
+      with:
+        # Semgrep automatically detects and runs rules based on the project's language.
+        # To specify rules, use 'config: path/to/rules.yaml' or 'config: p/python p/ci'
+        # By default, it uploads SARIF results to GitHub Security tab if permissions are set.
+        sarif: true # Ensure SARIF output is generated for GitHub Security tab.
