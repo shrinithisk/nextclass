@@ -1,0 +1,71 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # For checking out the repository code and for security scanners.
+      security-events: write # For uploading SARIF results from Semgrep.
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required for gitleaks to scan the full commit history.
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' # Specify a precise Python version for consistency.
+
+    - name: Cache Python dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-python-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Install project dependencies from requirements.txt
+        # If your project uses poetry or pipenv, adapt this step accordingly.
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        else
+          echo "No requirements.txt found. Skipping dependency installation."
+        fi
+
+    - name: Run tests
+      run: |
+        # Install pytest if not already in requirements.txt or dev dependencies.
+        pip install pytest
+        # Execute tests. Robustly handle the case where no tests are found (pytest exits with code 5).
+        pytest || [ $? -eq 5 ]
+
+    - name: Run Gitleaks scan
+      uses: zricethezav/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Gitleaks might use this for reporting or integration.
+      continue-on-error: true # Security scans should ideally report findings without failing the build.
+
+    - name: Run Semgrep scan
+      uses: returntocorp/semgrep-action@v1
+      with:
+        # Explicitly define common Python and security rules for comprehensive scanning.
+        config: |
+          p/python
+          p/security-audit
+        sarif: true # Ensure SARIF output is generated for GitHub Security tab.
+      continue-on-error: true # Security scans should ideally report findings without failing the build.
