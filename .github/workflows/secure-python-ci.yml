@@ -19,17 +19,17 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       with:
         fetch-depth: 0
 
     - name: Set up Python environment
-      uses: actions/setup-python@0b93645e9fbca3061306a771c91aa8929e5a3297
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
       with:
         python-version: '3.11'
 
     - name: Cache Python dependencies
-      uses: actions/cache@d930a84f245250243f350da006b586040a4c40b1
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
@@ -57,13 +57,13 @@ jobs:
       continue-on-error: true
 
     - name: Run Gitleaks scan
-      uses: gitleaks/gitleaks-action@30b4fbc2363dbb28d21c9024f8488b7dc37e0e7a
+      uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       continue-on-error: true
 
     - name: Run Semgrep scan
-      uses: semgrep/semgrep-action@713e2d6b38c2634e320f719460d0066f108d8102
+      uses: semgrep/semgrep-action@713efdd345f3035192eaa63f56867b88e63e4e5d
       with:
         config: auto
       continue-on-error: true
