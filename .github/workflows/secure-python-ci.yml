@@ -55,7 +55,7 @@ jobs:
         pytest || [ $? -eq 5 ]
 
     - name: Run Gitleaks scan
-      uses: zricethezav/gitleaks-action@v2
+      uses: zricethezav/gitleaks-action@7c768997a36f6d226a267b204642c672957f3261
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Gitleaks might use this for reporting or integration.
       continue-on-error: true # Security scans should ideally report findings without failing the build.
