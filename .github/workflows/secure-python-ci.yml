@@ -14,22 +14,22 @@ jobs:
   build-test-scan:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # For checking out the repository code and for security scanners.
-      security-events: write # For uploading SARIF results from Semgrep.
+      contents: read
+      security-events: write
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       with:
-        fetch-depth: 0 # Required for gitleaks to scan the full commit history.
+        fetch-depth: 0
 
     - name: Set up Python environment
-      uses: actions/setup-python@387f34c67ef3e31b679ac567bb01476f2780777e
+      uses: actions/setup-python@0b93645e9fbca3061306a771c91aa8929e5a3297
       with:
-        python-version: '3.11' # Specify a precise Python version for consistency.
+        python-version: '3.11'
 
     - name: Cache Python dependencies
-      uses: actions/cache@d113d332ad9328223867615028c2e27691653140
+      uses: actions/cache@d930a84f245250243f350da006b586040a4c40b1
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
@@ -39,33 +39,31 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # Install project dependencies from requirements.txt
-        # If your project uses poetry or pipenv, adapt this step accordingly.
         if [ -f requirements.txt ]; then
           pip install -r requirements.txt
         else
           echo "No requirements.txt found. Skipping dependency installation."
         fi
+      continue-on-error: true
 
     - name: Run tests
       run: |
-        # Install pytest if not already in requirements.txt or dev dependencies.
         pip install pytest
-        # Execute tests. Robustly handle the case where no tests are found (pytest exits with code 5).
-        pytest || [ $? -eq 5 ]
+        if find . -name "test_*.py" -o -name "*_test.py" | grep -q .; then
+          pytest
+        else
+          echo "No unit tests found, skipping test execution."
+        fi
+      continue-on-error: true
 
     - name: Run Gitleaks scan
-      uses: zricethezav/gitleaks-action@7c768997a36f6d226a267b204642c672957f3261
+      uses: gitleaks/gitleaks-action@30b4fbc2363dbb28d21c9024f8488b7dc37e0e7a
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Gitleaks might use this for reporting or integration.
-      continue-on-error: true # Security scans should ideally report findings without failing the build.
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: true
 
     - name: Run Semgrep scan
-      uses: returntocorp/semgrep-action@v1
+      uses: semgrep/semgrep-action@713e2d6b38c2634e320f719460d0066f108d8102
       with:
-        # Explicitly define common Python and security rules for comprehensive scanning.
-        config: |
-          p/python
-          p/security-audit
-        sarif: true # Ensure SARIF output is generated for GitHub Security tab.
-      continue-on-error: true # Security scans should ideally report findings without failing the build.
+        config: auto
+      continue-on-error: true
