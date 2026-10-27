@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      Review security policy for this programming language
       - uses: actions/setup-node@v4
       - run: npm ci
       - run: npm test
