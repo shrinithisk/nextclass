@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       Review security policy for this programming language
-      - uses: actions/setup-node@v4
+      Check GitHub Actions security guidelines or correct rule: syntax-check
       - run: npm ci
       - run: npm test
