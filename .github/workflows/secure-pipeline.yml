@@ -4,7 +4,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      Review security policy for this programming language
-      Check GitHub Actions security guidelines or correct rule: syntax-check
       - run: npm ci
       - run: npm test
